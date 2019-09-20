@@ -16,6 +16,7 @@
 package com.royal.admin;
 
 import cn.stylefeng.roses.core.config.WebAutoConfiguration;
+import com.royal.admin.config.properties.GunsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -44,7 +45,7 @@ public class GunsApplication {
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setLocation("/mnt/jar/tmp/royal_admin");
+        factory.setLocation("E:\\upload\\tmp");
         return factory.createMultipartConfig();
     }
 }

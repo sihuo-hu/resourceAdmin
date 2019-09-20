@@ -39,6 +39,7 @@
 		select ROLE_ID AS id, PID as pId,
 		NAME as name, (case when (PID = 0 or PID is null) then 'true'
 		else 'false' end) as `open` from sys_role
+		where ROLE_ID != 1
 	</select>
 
     <select id="roleTreeListByRoleId" resultType="com.royal.admin.core.common.node.ZTreeNode">
@@ -77,6 +78,7 @@
         </foreach>
 
         ) r1 ON r.ROLE_ID = r1.ROLE_ID
+        WHERE r.ROLE_ID != 1
         ORDER BY PID,SORT ASC
     </select>
 

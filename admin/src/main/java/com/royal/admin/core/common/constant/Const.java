@@ -62,4 +62,11 @@ public interface Const {
      */
     List<String> API_NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/gunsApi/not/**");
 
+    /**
+     * 文件上传路径
+     */
+    String FILE_UPLOAD_PATH = "E:\\upload\\";
+
+    String FILE_URL = "http://localhost:8082/admin/filePath/";
+
 }

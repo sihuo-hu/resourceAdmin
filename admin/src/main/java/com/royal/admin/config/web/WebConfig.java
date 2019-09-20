@@ -16,6 +16,7 @@
 package com.royal.admin.config.web;
 
 import com.royal.admin.config.properties.GunsProperties;
+import com.royal.admin.core.common.constant.Const;
 import com.royal.admin.core.common.controller.GunsErrorView;
 import com.royal.admin.core.interceptor.AttributeSetInteceptor;
 import com.royal.admin.core.interceptor.RestApiInteceptor;
@@ -73,6 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         //本应用
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+        registry.addResourceHandler("/filePath/**").addResourceLocations("file:"+ Const.FILE_UPLOAD_PATH);
     }
 
     /**

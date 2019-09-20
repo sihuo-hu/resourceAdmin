@@ -13,38 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.royal.admin.core.common.constant.cache;
+package com.royal.admin.core.common.constant.dictmap;
+
+import com.royal.admin.core.common.constant.dictmap.base.AbstractDictMap;
 
 /**
- * 缓存标识前缀集合,常用在ConstantFactory类中
+ * 层级的映射
  *
  * @author fengshuonan
- * @date 2017-04-25 9:37
+ * @date 2017-05-06 15:01
  */
-public interface CacheKey {
+public class HierarchyDict extends AbstractDictMap {
 
-    /**
-     * 角色名称(多个)
-     */
-    String ROLES_NAME = "roles_name_";
+    @Override
+    public void init() {
+        put("deptId", "层级名称");
+        put("num", "层级排序");
+        put("pid", "上级名称");
+        put("simplename", "层级简称");
+        put("fullname", "层级全称");
+        put("description", "备注");
+    }
 
-    /**
-     * 角色名称(单个)
-     */
-    String SINGLE_ROLE_NAME = "single_role_name_";
-
-    /**
-     * 角色英文名称
-     */
-    String SINGLE_ROLE_TIP = "single_role_tip_";
-
-    /**
-     * 部门名称
-     */
-    String DEPT_NAME = "dept_name_";
-    /**
-     * 层级名称
-     */
-    String HIERARCHY_NAME = "hierarchy_name_";
-
+    @Override
+    protected void initBeWrapped() {
+        putFieldWrapperMethodName("deptId", "getDeptName");
+        putFieldWrapperMethodName("pid", "getDeptName");
+    }
 }

@@ -65,6 +65,13 @@ public interface IConstantFactory {
     String getDeptName(Long deptId);
 
     /**
+     * 获取层级名称
+     * @param deptId
+     * @return
+     */
+    String getHierarchyName(Long deptId);
+
+    /**
      * 获取菜单的名称们(多个)
      */
     String getMenuNames(String menuIds);

@@ -15,23 +15,23 @@
  */
 package com.royal.admin.modular.api;
 
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import com.royal.admin.core.shiro.ShiroKit;
 import com.royal.admin.core.shiro.ShiroUser;
 import com.royal.admin.core.util.JwtTokenUtil;
+import com.royal.admin.modular.system.entity.FilePath;
 import com.royal.admin.modular.system.entity.User;
 import com.royal.admin.modular.system.mapper.UserMapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ErrorResponseData;
+import com.royal.admin.modular.system.service.FileService;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -48,6 +48,8 @@ public class ApiController extends BaseController {
 
     @Resource
     private UserMapper userMapper;
+    @Autowired
+    private FileService fileService;
 
     /**
      * api登录接口，通过账号密码获取token
@@ -87,9 +89,11 @@ public class ApiController extends BaseController {
     /**
      * 测试接口是否走鉴权
      */
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public Object test() {
-        return SUCCESS_TIP;
+    @RequestMapping(value = "/not/getUrl")
+    @ResponseBody
+    public Object getUrl(String id) {
+        FilePath filePath = fileService.getByAccount(id);
+        return ResponseData.success(filePath.getFileUrl());
     }
 
 }

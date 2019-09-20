@@ -1,0 +1,46 @@
+@layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/business/file/file_add.js"]}){
+<form id="fileForm" lay-filter="fileForm" class="layui-form model-form">
+    <input name="userId" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label">文件编号<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input name="account" id="account" placeholder="请输入文件编号" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">文件名称<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input name="name" id="name" placeholder="请输入文件名称" type="text" class="layui-input" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">层级<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input id="deptId" name="deptId" type="hidden">
+            <input id="deptName" name="deptName" placeholder="请输入层级" type="text" class="layui-input" lay-verify="required" required autocomplete="off"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+    </div>
+    <div class="">
+        <label class="layui-form-label">文件<span style="color: red;">*</span></label>
+        <div class="layui-upload" lay-filter="file">
+            <button type="button" class="layui-btn layui-btn-normal" id="importFile">选择文件</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+    </div>
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" type="button" id="saveFile">保存</button>
+    </div>
+</form>
+@}

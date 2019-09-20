@@ -48,6 +48,7 @@ public class ConstantFactory implements IConstantFactory {
 
     private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
     private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
+    private HierarchyMapper hierarchyMapper = SpringContextHolder.getBean(HierarchyMapper.class);
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
@@ -131,6 +132,21 @@ public class ConstantFactory implements IConstantFactory {
             Dept dept = deptMapper.selectById(deptId);
             if (ToolUtil.isNotEmpty(dept) && ToolUtil.isNotEmpty(dept.getFullName())) {
                 return dept.getFullName();
+            }
+            return "";
+        }
+    }
+    @Override
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.HIERARCHY_NAME + "'+#deptId")
+    public String getHierarchyName(Long deptId) {
+        if (deptId == null) {
+            return "";
+        } else if (deptId == 0L) {
+            return "顶级";
+        } else {
+            Hierarchy hierarchy = hierarchyMapper.selectById(deptId);
+            if (ToolUtil.isNotEmpty(hierarchy) && ToolUtil.isNotEmpty(hierarchy.getFullName())) {
+                return hierarchy.getFullName();
             }
             return "";
         }
