@@ -18,6 +18,7 @@ layui.use(['table', 'admin', 'ax'], function () {
         return [[
             {type: 'checkbox'},
             {field: 'deptId', hide: true, sort: true, title: 'id'},
+            {field: 'code', sort: true, title: '编号'},
             {field: 'simpleName', sort: true, title: '层级简称'},
             {field: 'fullName', sort: true, title: '层级全称'},
             {field: 'sort', sort: true, title: '排序'},

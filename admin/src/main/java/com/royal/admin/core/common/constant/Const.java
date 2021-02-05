@@ -55,12 +55,12 @@ public interface Const {
     /**
      * 后台管理不需要权限验证的资源表达式
      */
-    List<String> NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/assets/**", "/gunsApi/**", "/login", "/global/sessionError", "/kaptcha", "/error", "/global/error");
+    List<String> NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/assets/**", "/gunsApi/**", "/login", "/global/sessionError", "/kaptcha", "/error", "/global/error","/filePath/**");
 
     /**
      * API不需要权限验证的资源表达式
      */
-    List<String> API_NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/gunsApi/not/**");
+    List<String> API_NONE_PERMISSION_RES = CollectionUtil.newLinkedList("/gunsApi/not/**","/filePath/**");
 
     /**
      * 文件上传路径

@@ -35,4 +35,6 @@ public interface HierarchyMapper extends BaseMapper<Hierarchy> {
      * 获取所有部门树列表
      */
     List<TreeviewNode> treeviewNodes();
+
+
 }

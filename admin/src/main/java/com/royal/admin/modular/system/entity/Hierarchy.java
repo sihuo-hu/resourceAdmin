@@ -1,6 +1,7 @@
 package com.royal.admin.modular.system.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Date;
  * @since 2018-12-07
  */
 @TableName("b_hierarchy")
+@Data
 public class Hierarchy implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +30,11 @@ public class Hierarchy implements Serializable {
      */
     @TableField("PID")
     private Long pid;
+    /**
+     * 编号
+     */
+    @TableField("CODE")
+    private String code;
     /**
      * 父级ids
      */
@@ -79,118 +86,4 @@ public class Hierarchy implements Serializable {
     @TableField(value = "UPDATE_USER", fill = FieldFill.UPDATE)
     private Long updateUser;
 
-
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    public Long getPid() {
-        return pid;
-    }
-
-    public void setPid(Long pid) {
-        this.pid = pid;
-    }
-
-    public String getPids() {
-        return pids;
-    }
-
-    public void setPids(String pids) {
-        this.pids = pids;
-    }
-
-    public String getSimpleName() {
-        return simpleName;
-    }
-
-    public void setSimpleName(String simpleName) {
-        this.simpleName = simpleName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(Long createUser) {
-        this.createUser = createUser;
-    }
-
-    public Long getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(Long updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    @Override
-    public String toString() {
-        return "Dept{" +
-        ", deptId=" + deptId +
-        ", pid=" + pid +
-        ", pids=" + pids +
-        ", simpleName=" + simpleName +
-        ", fullName=" + fullName +
-        ", description=" + description +
-        ", version=" + version +
-        ", sort=" + sort +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        ", createUser=" + createUser +
-        ", updateUser=" + updateUser +
-        "}";
-    }
 }

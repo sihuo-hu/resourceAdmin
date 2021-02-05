@@ -3,6 +3,7 @@ package com.royal.admin.modular.system.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.royal.admin.core.common.constant.Const;
@@ -17,10 +18,13 @@ import com.royal.admin.core.shiro.ShiroUser;
 import com.royal.admin.core.shiro.service.UserAuthService;
 import com.royal.admin.core.util.ApiMenuFilter;
 import com.royal.admin.modular.system.entity.FilePath;
+import com.royal.admin.modular.system.entity.Hierarchy;
 import com.royal.admin.modular.system.entity.User;
 import com.royal.admin.modular.system.factory.UserFactory;
 import com.royal.admin.modular.system.mapper.FileMapper;
 import com.royal.admin.modular.system.mapper.UserMapper;
+import com.royal.admin.modular.system.model.FileJson;
+import com.royal.admin.modular.system.model.HierarchyJson;
 import com.royal.admin.modular.system.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -40,6 +44,8 @@ import java.util.Map;
  */
 @Service
 public class FileService extends ServiceImpl<FileMapper, FilePath> {
+    @Autowired
+    private HierarchyService hierarchyService;
 
     /**
      * 删除文件
@@ -137,6 +143,42 @@ public class FileService extends ServiceImpl<FileMapper, FilePath> {
     public Page<Map<String, Object>> selectUsers(DataScope dataScope, String name, String beginTime, String endTime, Long deptId) {
         Page page = LayuiPageFactory.defaultPage();
         return this.baseMapper.selectUsers(page, dataScope, name, beginTime, endTime, deptId);
+    }
+
+    public List<FilePath> getListByDeptId(Long deptId) {
+        QueryWrapper<FilePath> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("DEPT_ID", deptId);
+        return this.baseMapper.selectList(queryWrapper);
+    }
+
+    public HierarchyJson recursionListByDeptId(HierarchyJson hierarchyJson, Long deptId) {
+        List<Hierarchy> hierarchyList = hierarchyService.getByPId(deptId);
+        if (hierarchyList != null && hierarchyList.size() > 0) {
+                List<HierarchyJson> hierarchyJsonList = new ArrayList<>();
+            for (Hierarchy hierarchy : hierarchyList) {
+                HierarchyJson hierarchyJson1 = new HierarchyJson();
+                hierarchyJson1.setId(hierarchy.getCode());
+                hierarchyJson1.setName(hierarchy.getSimpleName());
+                List<FilePath> filePathList = this.getListByDeptId(hierarchy.getDeptId());
+                if (filePathList != null && filePathList.size() > 0) {
+                    List<FileJson> fileJsonList = new ArrayList<>();
+                    for (FilePath filePath : filePathList) {
+                        FileJson fileJson = new FileJson();
+                        fileJson.setId(filePath.getAccount());
+                        fileJson.setName(filePath.getName());
+                        fileJson.setType(filePath.getFileType());
+                        fileJsonList.add(fileJson);
+                    }
+                    hierarchyJson1.setFileList(fileJsonList);
+                }
+                hierarchyJsonList.add(hierarchyJson1);
+                recursionListByDeptId(hierarchyJson1,hierarchy.getDeptId());
+            }
+            hierarchyJson.setHierarchyList(hierarchyJsonList);
+        } else {
+            return hierarchyJson;
+        }
+        return hierarchyJson;
     }
 
 //    /**

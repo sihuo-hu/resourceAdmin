@@ -20,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        DEPT_ID AS deptId, PID AS pid, PIDS AS pids, SIMPLE_NAME AS simpleName, FULL_NAME AS fullName, DESCRIPTION AS description, VERSION AS version, SORT AS sort, CREATE_TIME AS createTime, UPDATE_TIME AS updateTime, CREATE_USER AS createUser, UPDATE_USER AS updateUser
+        DEPT_ID AS deptId, CODE AS code,PID AS pid, PIDS AS pids, SIMPLE_NAME AS simpleName, FULL_NAME AS fullName, DESCRIPTION AS description, VERSION AS version, SORT AS sort, CREATE_TIME AS createTime, UPDATE_TIME AS updateTime, CREATE_USER AS createUser, UPDATE_USER AS updateUser
     </sql>
 
     <select id="tree" resultType="com.royal.admin.core.common.node.ZTreeNode">

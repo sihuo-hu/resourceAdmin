@@ -28,6 +28,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
             {field: 'userId', hide: true, sort: true, title: '主键ID'},
             {field: 'account', sort: true, title: '文件编号'},
             {field: 'name', sort: true, title: '文件名'},
+            {field: 'fileType', sort: true, title: '类型'},
             {field: 'deptName', sort: true, title: '层级名称'},
             {field: 'fileUrl', sort: true, title: 'URl'},
             {field: 'createTime', sort: true, title: '创建时间'},
@@ -62,7 +63,7 @@ layui.use(['layer', 'form', 'table', 'ztree', 'laydate', 'admin', 'ax'], functio
         top.layui.admin.open({
             type: 2,
             title: '添加文件',
-            area:["400px","400px"],
+            area:["400px","450px"],
             content: Feng.ctxPath + '/file/file_add',
             end: function () {
                 admin.getTempData('formOk') && table.reload(MgrUser.tableId);

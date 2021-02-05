@@ -51,6 +51,7 @@ public class FileWrapper extends BaseControllerWrapper {
     protected void wrapTheMap(Map<String, Object> map) {
         map.put("deptName", ConstantFactory.me().getHierarchyName((Long) map.get("deptId")));
         map.put("statusName", ConstantFactory.me().getStatusName((String) map.get("status")));
+        map.put("fileType", ConstantFactory.me().getDictsByName("文件类型",(String) map.get("fileType")));
     }
 
 }

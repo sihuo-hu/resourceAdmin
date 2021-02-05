@@ -41,11 +41,6 @@ public class FilePath implements Serializable {
     @TableField("DEPT_ID")
     private Long deptId;
     /**
-     * 状态(字典)
-     */
-    @TableField("STATUS")
-    private String status;
-    /**
      * 创建时间
      */
     @TableField(value = "CREATE_TIME", fill = FieldFill.INSERT)
@@ -76,5 +71,10 @@ public class FilePath implements Serializable {
      */
     @TableField("FILE_URL")
     private String fileUrl;
+    /**
+     * URL
+     */
+    @TableField("FILE_TYPE")
+    private String fileType;
 
 }

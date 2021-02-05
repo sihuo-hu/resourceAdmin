@@ -61,7 +61,7 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'upload'], function () {
         , url: Feng.ctxPath + '/file/add'
         , auto: false
         , accept: 'file'
-        , exts: 'AVI|mov|rmvb|rm|FLV|mp4|3GP|json|csv|WAV|FLAC|APE|ALAC|cda|MP3|AAC|Opus|WMA|OGG' //普通文件
+        // , exts: 'AVI|mov|rmvb|rm|FLV|mp4|3GP|json|csv|WAV|FLAC|APE|ALAC|cda|MP3|AAC|Opus|WMA|OGG' //普通文件
         , bindAction: '#saveFile'
         , data: {
             account: function () {
@@ -72,6 +72,10 @@ layui.use(['layer', 'form', 'admin', 'laydate', 'ax', 'upload'], function () {
             },
             deptId: function () {
                 return $('#deptId').val();
+            }
+            ,
+            fileType: function () {
+                return $('#fileType').val();
             }
         }
         , before: function (obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。

@@ -20,11 +20,15 @@ import com.royal.admin.core.shiro.ShiroKit;
 import com.royal.admin.core.shiro.ShiroUser;
 import com.royal.admin.core.util.JwtTokenUtil;
 import com.royal.admin.modular.system.entity.FilePath;
+import com.royal.admin.modular.system.entity.Hierarchy;
 import com.royal.admin.modular.system.entity.User;
 import com.royal.admin.modular.system.mapper.UserMapper;
 import cn.stylefeng.roses.core.base.controller.BaseController;
 import cn.stylefeng.roses.core.reqres.response.ErrorResponseData;
+import com.royal.admin.modular.system.model.FileJson;
+import com.royal.admin.modular.system.model.HierarchyJson;
 import com.royal.admin.modular.system.service.FileService;
+import com.royal.admin.modular.system.service.HierarchyService;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -34,7 +38,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 接口控制器提供
@@ -50,6 +56,8 @@ public class ApiController extends BaseController {
     private UserMapper userMapper;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private HierarchyService hierarchyService;
 
     /**
      * api登录接口，通过账号密码获取token
@@ -87,13 +95,42 @@ public class ApiController extends BaseController {
     }
 
     /**
-     * 测试接口是否走鉴权
+     * 获取文件地址
      */
     @RequestMapping(value = "/not/getUrl")
     @ResponseBody
     public Object getUrl(String id) {
         FilePath filePath = fileService.getByAccount(id);
         return ResponseData.success(filePath.getFileUrl());
+    }
+
+    /**
+     * 获取文件地址
+     */
+    @RequestMapping(value = "/not/getJson")
+    @ResponseBody
+    public Object getJson(String code) {
+        HierarchyJson hierarchyJson = new HierarchyJson();
+        Hierarchy hierarchy = hierarchyService.getByCode(code);
+        if(hierarchy==null){
+            return ResponseData.error("未找到对应编码");
+        }
+        hierarchyJson.setId(hierarchy.getCode());
+        hierarchyJson.setName(hierarchy.getSimpleName());
+        List<FilePath> filePathList = fileService.getListByDeptId(hierarchy.getDeptId());
+        if(filePathList!=null&&filePathList.size()>0){
+            List<FileJson> fileJsonList = new ArrayList<>();
+            for (FilePath filePath : filePathList) {
+                FileJson fileJson = new FileJson();
+                fileJson.setId(filePath.getAccount());
+                fileJson.setName(filePath.getName());
+                fileJson.setType(filePath.getFileType());
+                fileJsonList.add(fileJson);
+            }
+            hierarchyJson.setFileList(fileJsonList);
+        }
+        fileService.recursionListByDeptId(hierarchyJson,hierarchy.getDeptId());
+        return ResponseData.success(hierarchyJson);
     }
 
 }

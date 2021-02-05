@@ -46,8 +46,11 @@ public class HierarchyService extends ServiceImpl<HierarchyMapper, Hierarchy> {
     @Transactional(rollbackFor = Exception.class)
     public void addDept(Hierarchy dept) {
 
-        if (ToolUtil.isOneEmpty(dept, dept.getSimpleName(), dept.getFullName(), dept.getPid())) {
+        if (ToolUtil.isOneEmpty(dept, dept.getSimpleName(), dept.getFullName(), dept.getPid(), dept.getCode())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        if (this.isCodeExist(dept.getCode())) {
+            throw new ServiceException(BizExceptionEnum.EXISTED_THE_MENU);
         }
 
         //完善pids,根据pid拿到pid的pids
@@ -66,8 +69,12 @@ public class HierarchyService extends ServiceImpl<HierarchyMapper, Hierarchy> {
     @CacheEvict(value = Cache.CONSTANT, key = "'" + CacheKey.HIERARCHY_NAME + "'+#dept.deptId")
     public void editDept(Hierarchy dept) {
 
-        if (ToolUtil.isOneEmpty(dept, dept.getDeptId(), dept.getSimpleName(), dept.getFullName(), dept.getPid())) {
+        if (ToolUtil.isOneEmpty(dept, dept.getDeptId(), dept.getSimpleName(), dept.getFullName(), dept.getPid(), dept.getCode())) {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+
+        if (this.isCodeExist(dept.getCode())) {
+            throw new ServiceException(BizExceptionEnum.EXISTED_THE_MENU);
         }
 
         //完善pids,根据pid拿到pid的pids
@@ -145,5 +152,26 @@ public class HierarchyService extends ServiceImpl<HierarchyMapper, Hierarchy> {
             dept.setPid(pid);
             dept.setPids(pids + "[" + pid + "],");
         }
+    }
+
+    public Hierarchy getByCode(String code) {
+        QueryWrapper<Hierarchy> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("CODE", code);
+        return this.baseMapper.selectOne(queryWrapper);
+    }
+
+    private boolean isCodeExist(String code) {
+        Hierarchy hierarchy = getByCode(code);
+        if (hierarchy != null && ToolUtil.isNotEmpty(hierarchy.getDeptId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Hierarchy> getByPId(Long deptId) {
+        QueryWrapper<Hierarchy> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("PID", deptId);
+        return this.baseMapper.selectList(queryWrapper);
     }
 }

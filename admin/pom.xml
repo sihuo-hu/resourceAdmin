@@ -71,11 +71,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-        </dependency>
 
         <!--shiro依赖和缓存-->
         <dependency>
@@ -162,22 +157,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>springloaded</artifactId>
             <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.jpush.api</groupId>
-            <artifactId>jpush-client</artifactId>
-            <version>3.3.10</version>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.42.Final</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
